@@ -1,7 +1,7 @@
 <template>
   <main id="app" class="container py-5">
     <section class="card mx-auto shadow-sm calculator-card">
-      <form class="card-body p-4 p-md-5" novalidate @submit.prevent="sumar">
+      <form class="card-body p-4 p-md-5" novalidate @submit.prevent="ejecutar('sumar')">
         <h1 class="h2 text-center mb-4">Calculadora con Vue</h1>
 
         <div class="mb-3">
@@ -33,10 +33,10 @@
         </div>
 
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-4">
-          <button class="btn btn-primary" type="button" @click="sumar">Sumar</button>
-          <button class="btn btn-secondary" type="button" @click="restar">Restar</button>
-          <button class="btn btn-success" type="button" @click="multiplicar">Multiplicar</button>
-          <button class="btn btn-warning" type="button" @click="dividir">Dividir</button>
+          <button class="btn btn-primary" type="button" @click="ejecutar('sumar')">Sumar</button>
+          <button class="btn btn-secondary" type="button" @click="ejecutar('restar')">Restar</button>
+          <button class="btn btn-success" type="button" @click="ejecutar('multiplicar')">Multiplicar</button>
+          <button class="btn btn-warning" type="button" @click="ejecutar('dividir')">Dividir</button>
         </div>
 
         <div v-if="error" id="mensaje-error" class="alert alert-danger" role="alert">
@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import { calcular } from './calculator.mjs';
+
 export default {
   name: 'App',
   data() {
@@ -67,44 +69,10 @@ export default {
     };
   },
   methods: {
-    validarNumeros() {
-      if (this.numero1 === '' || this.numero2 === '') {
-        this.error = 'Ingresa ambos números para realizar el cálculo.';
-        this.resultado = null;
-        return false;
-      }
-
-      if (!Number.isFinite(this.numero1) || !Number.isFinite(this.numero2)) {
-        this.error = 'Ingresa valores numéricos válidos.';
-        this.resultado = null;
-        return false;
-      }
-
-      this.error = '';
-      return true;
-    },
-    sumar() {
-      if (!this.validarNumeros()) return;
-      this.resultado = this.numero1 + this.numero2;
-    },
-    restar() {
-      if (!this.validarNumeros()) return;
-      this.resultado = this.numero1 - this.numero2;
-    },
-    multiplicar() {
-      if (!this.validarNumeros()) return;
-      this.resultado = this.numero1 * this.numero2;
-    },
-    dividir() {
-      if (!this.validarNumeros()) return;
-
-      if (this.numero2 === 0) {
-        this.error = 'No se puede dividir por cero.';
-        this.resultado = null;
-        return;
-      }
-
-      this.resultado = this.numero1 / this.numero2;
+    ejecutar(operacion) {
+      const calculo = calcular(operacion, this.numero1, this.numero2);
+      this.resultado = calculo.resultado;
+      this.error = calculo.error;
     },
     limpiarError() {
       this.error = '';
