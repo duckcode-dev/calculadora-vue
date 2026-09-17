@@ -60,8 +60,8 @@ export default {
   name: 'App',
   data() {
     return {
-      numero1: '',
-      numero2: '',
+      numero1: 0,
+      numero2: 0,
       resultado: null,
       error: ''
     };
@@ -110,8 +110,8 @@ export default {
       this.error = '';
     },
     limpiar() {
-      this.numero1 = '';
-      this.numero2 = '';
+      this.numero1 = 0;
+      this.numero2 = 0;
       this.resultado = null;
       this.error = '';
     }
