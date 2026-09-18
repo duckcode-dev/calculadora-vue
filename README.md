@@ -79,3 +79,7 @@ public/
 - [Bootstrap 5](https://getbootstrap.com/)
 - [Vue CLI](https://cli.vuejs.org/)
 - [Node.js Test Runner](https://nodejs.org/api/test.html)
+
+## Licencia
+
+Este proyecto está bajo la [licencia MIT](LICENSE).
